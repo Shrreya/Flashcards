@@ -18,6 +18,7 @@ export default function Fab (props) {
   return (
     <FloatingAction
       overrideWithAction
+      distanceToEdge={15}
       actions={actions}
       color={green}
       onPressItem={props.onPressItem}
