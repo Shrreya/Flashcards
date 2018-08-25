@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Dialog from "react-native-dialog";
+import { formatDeck } from '../utils/helpers';
+import { addDeck } from '../actions';
+import { submitDeck } from '../utils/api';
 
-export default class AddDeck extends Component {
+class AddDeck extends Component {
 
   state = {
-    name: ''
+    title: ''
   };
 
-  handleChange = (name) => {
-    this.setState({name});
+  handleChange = (title) => {
+    this.setState({title});
   };
 
   handleCancel = () => {
-    // Reset deck name & dismiss
-    this.setState({name: ''});
+    // Reset deck title & dismiss
+    this.setState({title: ''});
     this.props.onDismiss();
   };
 
   handleSubmit = () => {
-    // TODO : Save new deck
+    // TODO: empty title error handling
+    
+    const deck = formatDeck(this.state.title);
+    // Update Redux & DB
+    this.props.dispatch(addDeck(deck));
+    submitDeck(deck);
+
     this.handleCancel();
   };
 
@@ -27,11 +37,11 @@ export default class AddDeck extends Component {
       <Dialog.Container visible={this.props.visible}>
         <Dialog.Title>New Deck</Dialog.Title>
         <Dialog.Description>
-          Give a nice name to your new deck.
+          Give a nice title to your new deck.
         </Dialog.Description>
         <Dialog.Input
-          placeholder="Deck name"
-          value={this.state.name}
+          placeholder="Deck title"
+          value={this.state.title}
           onChangeText={this.handleChange}/>
         <Dialog.Button label="Cancel" onPress={this.handleCancel}/>
         <Dialog.Button label="Submit" onPress={this.handleSubmit}/>
@@ -39,3 +49,5 @@ export default class AddDeck extends Component {
     );
   }
 }
+
+export default connect()(AddDeck);
