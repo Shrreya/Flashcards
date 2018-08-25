@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text, FlatList } from 'react-native';
 import Fab from './Fab';
 import AddDeck from './AddDeck';
+import { fetchDecks } from '../utils/api';
+import { receiveDecks } from '../actions';
+import DeckPreview from './DeckPreview';
 
-export default class DeckList extends Component {
+class DeckList extends Component {
 
   state = {
     visible : false
@@ -17,10 +21,20 @@ export default class DeckList extends Component {
     this.setState({visible: false});
   };
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    fetchDecks().then((decks) => dispatch(receiveDecks(JSON.parse(decks))));
+  }
+
   render() {
+
     return (
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <Text>All Decks Listed Here</Text>
+      <View style={{ flex: 1, paddingBottom: 20 }}>
+        <FlatList
+          data={this.props.decks}
+          keyExtractor={(item, index) => Object.keys(item)[0]}
+          renderItem={({item}) => <DeckPreview deck={item}/>}
+        />
         <AddDeck
           visible={this.state.visible}
           onDismiss={this.closeDialog}
@@ -32,3 +46,13 @@ export default class DeckList extends Component {
     );
   }
 }
+
+const mapStateToProps = (decks) => {
+  return {
+    decks : Object.keys(decks).map((key) => ({
+      [key] : decks[key]
+    }))
+  }
+};
+
+export default connect(mapStateToProps)(DeckList);
