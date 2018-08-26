@@ -30,7 +30,7 @@ class DeckList extends Component {
     const { decks } = this.props;
 
     return (
-      <View style={styles.container}>
+      <View style={{flex:1}}>
         {decks.length === 0 &&
           <Text
             style={styles.emptyListMsg}>
@@ -55,12 +55,9 @@ class DeckList extends Component {
 }
 
 const styles = StyleSheet.create({
-  container : {
-    flex: 1,
-    alignItems: 'center'
-  },
   emptyListMsg : {
-    paddingTop: 25
+    paddingTop: 25,
+    alignSelf: 'center'
   }
 });
 
