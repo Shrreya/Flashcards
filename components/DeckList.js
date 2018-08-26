@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, FlatList } from 'react-native';
+import DeckPreview from './DeckPreview';
 import Fab from './Fab';
 import AddDeck from './AddDeck';
 import { fetchDecks } from '../utils/api';
 import { receiveDecks } from '../actions';
-import DeckPreview from './DeckPreview';
 
 class DeckList extends Component {
 
@@ -27,9 +27,8 @@ class DeckList extends Component {
   }
 
   render() {
-
     return (
-      <View style={{ flex: 1, paddingBottom: 20 }}>
+      <View style={{flex:1}}>
         <FlatList
           data={this.props.decks}
           keyExtractor={(item, index) => Object.keys(item)[0]}

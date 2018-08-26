@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 15,
+    marginBottom: 15,
     marginLeft: margin,
     marginRight: margin
   },
