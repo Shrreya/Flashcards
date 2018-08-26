@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import DeckPreview from './DeckPreview';
 import Fab from './Fab';
 import AddDeck from './AddDeck';
@@ -27,10 +27,18 @@ class DeckList extends Component {
   }
 
   render() {
+    const { decks } = this.props;
+
     return (
-      <View style={{flex:1}}>
+      <View style={styles.container}>
+        {decks.length === 0 &&
+          <Text
+            style={styles.emptyListMsg}>
+            Your decks will be listed here.
+          </Text>
+        }
         <FlatList
-          data={this.props.decks}
+          data={decks}
           keyExtractor={(item, index) => Object.keys(item)[0]}
           renderItem={({item}) => <DeckPreview deck={item}/>}
         />
@@ -45,6 +53,16 @@ class DeckList extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container : {
+    flex: 1,
+    alignItems: 'center'
+  },
+  emptyListMsg : {
+    paddingTop: 25
+  }
+});
 
 const mapStateToProps = (decks) => {
   return {
