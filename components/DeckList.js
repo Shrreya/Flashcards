@@ -21,6 +21,10 @@ class DeckList extends Component {
     this.setState({visible: false});
   };
 
+  openDeck = (title) => {
+    this.props.navigation.navigate('Deck', { title });
+  }
+
   componentDidMount() {
     const { dispatch } = this.props;
     fetchDecks().then((decks) => dispatch(receiveDecks(JSON.parse(decks))));
@@ -40,7 +44,7 @@ class DeckList extends Component {
         <FlatList
           data={decks}
           keyExtractor={(item, index) => item.title}
-          renderItem={({item}) => <DeckPreview deck={item}/>}
+          renderItem={({item}) => <DeckPreview deck={item} onPress={this.openDeck}/>}
         />
         <AddDeck
           visible={this.state.visible}
