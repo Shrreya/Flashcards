@@ -1,15 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { green, lightGrey, darkGrey } from '../utils/colors';
 import { getDeckPreviewSizes } from '../utils/helpers';
 
-export default function DeckPreview ({ deck }) {
+export default function DeckPreview ({ deck, onPress }) {
 
   return (
-    <View style={styles.deckPreview}>
+    <TouchableOpacity
+      style={styles.deckPreview}
+      onPress={() => onPress(deck.title)}
+    >
       <Text style={styles.title}>{deck.title}</Text>
       <Text style={styles.cardCount}>{deck.questions.length} cards</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
