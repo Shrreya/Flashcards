@@ -5,6 +5,7 @@ import Dialog from "react-native-dialog";
 import { formatDeck } from '../utils/helpers';
 import { addDeck } from '../actions';
 import { submitDeck } from '../utils/api';
+import { red } from '../utils/colors';
 
 class AddDeck extends Component {
 
@@ -68,7 +69,7 @@ class AddDeck extends Component {
 
 const styles = StyleSheet.create({
   label : {
-    color:'#C62828',
+    color: red,
     alignSelf: 'center',
     paddingBottom: 10
   }
