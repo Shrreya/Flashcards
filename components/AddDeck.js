@@ -36,11 +36,12 @@ class AddDeck extends Component {
     else if (Object.keys(decks).includes(title)) {
       this.setState({label: 'Deck title already exists!'});
     }
-    // Deck submission - Update Redux & DB
+    // Deck submission - Update Redux & DB, then route to new deck
     else {
       const deck = formatDeck(title);
       this.props.dispatch(addDeck(deck));
       submitDeck(deck);
+      this.props.onSubmit(title);
       this.handleCancel();
     }
   };

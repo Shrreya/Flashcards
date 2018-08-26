@@ -49,6 +49,7 @@ class DeckList extends Component {
         <AddDeck
           visible={this.state.visible}
           onDismiss={this.closeDialog}
+          onSubmit={this.openDeck}
         />
         <Fab
           onPressItem={this.showDialog}
