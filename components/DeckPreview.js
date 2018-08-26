@@ -5,13 +5,10 @@ import { getDeckPreviewSizes } from '../utils/helpers';
 
 export default function DeckPreview ({ deck }) {
 
-  const title = deck[Object.keys(deck)[0]].title;
-  const cardCount = deck[Object.keys(deck)[0]].questions.length;
-
   return (
     <View style={styles.deckPreview}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.cardCount}>{cardCount} cards</Text>
+      <Text style={styles.title}>{deck.title}</Text>
+      <Text style={styles.cardCount}>{deck.questions.length} cards</Text>
     </View>
   );
 }

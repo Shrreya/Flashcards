@@ -39,7 +39,7 @@ class DeckList extends Component {
         }
         <FlatList
           data={decks}
-          keyExtractor={(item, index) => Object.keys(item)[0]}
+          keyExtractor={(item, index) => item.title}
           renderItem={({item}) => <DeckPreview deck={item}/>}
         />
         <AddDeck
@@ -63,9 +63,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (decks) => {
   return {
-    decks : Object.keys(decks).map((key) => ({
-      [key] : decks[key]
-    }))
+    decks : Object.keys(decks).map((key) => decks[key])
   }
 };
 
