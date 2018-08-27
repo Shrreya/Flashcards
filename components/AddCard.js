@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { green, white, darkGrey, red } from '../utils/colors';
+import { formatCard } from '../utils/helpers';
+import { addCardToDeck } from '../actions';
+import { submitCardToDeck } from '../utils/api';
 
 class AddCard extends Component {
 
@@ -19,10 +22,19 @@ class AddCard extends Component {
 
   handleSubmit = () => {
     const { question, answer } = this.state;
+    // Question and/or answer empty
     if (question.length === 0 || answer.length === 0) {
       this.setState({label: 'Question and/or answer cannot be empty!'});
     }
-    // TODO: add card to Redux & DB
+    // Card submission - Update Redux & DB, then route back to deck
+    else {
+      const card = formatCard(question, answer);
+      const { title } = this.props.navigation.state.params;
+      this.props.dispatch(addCardToDeck(card, title));
+      submitCardToDeck(card, title);
+      this.setState({question: '', answer: '', label: ''});
+      this.props.navigation.goBack();
+    }
   };
 
   render() {
