@@ -12,4 +12,11 @@ export function submitDeck (deck) {
   }));
 }
 
-// TODO : submit card to deck
+export function submitCardToDeck (card, title) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then((results) => {
+      const decks = JSON.parse(results);
+      decks[title].questions = decks[title].questions.concat(card);
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+    });
+}
