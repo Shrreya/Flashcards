@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { green, white, darkGrey, red } from '../utils/colors';
 import { formatCard } from '../utils/helpers';
@@ -42,7 +42,11 @@ class AddCard extends Component {
     const { question, answer, label } = this.state;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior='padding'
+        enabled
+      >
         <TextInput
           style={styles.input}
           multiline
@@ -57,18 +61,15 @@ class AddCard extends Component {
           value={answer}
           onChangeText={(text) => this.update('answer', text)}
         />
-        <Text
-          style={styles.label}
-        >
+        <Text style={styles.label}>
           {label}
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={this.handleSubmit}
-        >
+          onPress={this.handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
