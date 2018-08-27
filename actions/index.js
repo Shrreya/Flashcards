@@ -16,4 +16,10 @@ export function addDeck (deck) {
   }
 }
 
-// TODO: addCardToDeck action creator
+export function addCardToDeck (card, title) {
+  return {
+    type: ADD_CARD_TO_DECK,
+    card,
+    title
+  }
+}

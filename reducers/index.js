@@ -15,7 +15,10 @@ export default function decks (state = {}, action) {
     case ADD_CARD_TO_DECK :
       return {
         ...state,
-        //TODO: add card to deck
+        [action.title] : {
+          ...state[action.title],
+          questions: state[action.title].questions.concat(action.card)
+        }
       }
     default :
       return state
