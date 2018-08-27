@@ -6,7 +6,7 @@ export function formatDeck (title) {
       title,
       questions: []
     }
-  }
+  };
 }
 
 export function getDeckPreviewSizes () {
@@ -18,5 +18,12 @@ export function getDeckPreviewSizes () {
     width,
     height,
     margin
+  };
+}
+
+export function formatCard (question, answer) {
+  return {
+    question,
+    answer
   };
 }
