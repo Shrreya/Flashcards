@@ -9,14 +9,10 @@ class Deck extends Component {
     title: navigation.state.params.title
   });
 
-  addCard = () => {
+  openScreen = (screen) => {
     const { title } = this.props.deck;
-    this.props.navigation.navigate('AddCard', { title });
+    this.props.navigation.navigate(screen, { title });
   };
-
-  startQuiz = () => {
-    // TODO : route to quiz screen
-  }
 
   render() {
 
@@ -32,12 +28,12 @@ class Deck extends Component {
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={this.addCard}>
+          onPress={() => this.openScreen('AddCard')}>
           <Text style={styles.buttonText}>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={this.startQuiz}>
+          onPress={() => this.openScreen('Quiz')}>
           <Text style={styles.buttonText}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
