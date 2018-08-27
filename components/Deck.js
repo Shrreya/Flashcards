@@ -10,7 +10,8 @@ class Deck extends Component {
   });
 
   addCard = () => {
-    // TODO : route to add card screen
+    const { title } = this.props.deck;
+    this.props.navigation.navigate('AddCard', { title });
   };
 
   startQuiz = () => {
