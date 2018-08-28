@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { green, white } from '../utils/colors';
 
-export default function ScoreReport ({ navigation }) {
+class ScoreReport extends Component {
 
-  const { score, total, title } = navigation.state.params;
+  render() {
+    const { navigation } = this.props;
+    const { score, total, title } = navigation.state.params;
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        {title}
-      </Text>
-      <Text style={styles.score}>
-        You scored {score} out of {total}
-      </Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.push('Quiz', { title })}>
-        <Text style={styles.buttonText}>Restart Quiz</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Deck', { title })}>
-        <Text style={styles.buttonText}>Back to Deck</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {title}
+        </Text>
+        <Text style={styles.score}>
+          You scored {score} out of {total}
+        </Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('Quiz', { title })}>
+          <Text style={styles.buttonText}>Restart Quiz</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Deck', { title })}>
+          <Text style={styles.buttonText}>Back to Deck</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -57,3 +60,5 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
+export default ScoreReport;
