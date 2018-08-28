@@ -27,3 +27,19 @@ export function formatCard (question, answer) {
     answer
   };
 }
+
+export function createNotification () {
+  return {
+    title: 'Take a quiz today!',
+    body: "👋 Don't forget to take at least one quiz for today!",
+    ios: {
+      sound: true,
+    },
+    android: {
+      sound: true,
+      priority: 'high',
+      sticky: false,
+      vibrate: true,
+    }
+  }
+}
