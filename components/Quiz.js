@@ -1,28 +1,88 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { green, darkGrey, red, white } from '../utils/colors';
+import { green, transparentGrey, red, white } from '../utils/colors';
 
 class Quiz extends Component {
 
   state = {
     score: 0,
-    card: 0
+    card: 0,
+    flipText: 'answer'
   };
+
+  componentWillMount() {
+    this.animatedValue = new Animated.Value(0);
+    this.value = 0;
+    this.animatedValue.addListener(({ value }) => {
+      this.value = value;
+    })
+    this.frontInterpolate = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['0deg', '180deg'],
+    })
+    this.backInterpolate = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['180deg', '360deg']
+    })
+    this.frontOpacity = this.animatedValue.interpolate({
+      inputRange: [89, 90],
+      outputRange: [1, 0]
+    })
+    this.backOpacity = this.animatedValue.interpolate({
+      inputRange: [89, 90],
+      outputRange: [0, 1]
+    })
+  }
+
+  flipCard = () => {
+    if (this.value >= 90) {
+      Animated.spring(this.animatedValue,{
+        toValue: 0,
+        friction: 8,
+        tension: 10
+      }).start();
+      this.setState({flipText: 'answer'});
+    } else {
+      Animated.spring(this.animatedValue,{
+        toValue: 180,
+        friction: 8,
+        tension: 10
+      }).start();
+      this.setState({flipText: 'question'});
+    }
+  }
 
   render() {
     const { cards, title } = this.props;
-    const { card } = this.state;
+    const { card, flipText } = this.state;
+
+    const frontAnimatedStyle = {
+      transform: [
+        { rotateY: this.frontInterpolate }
+      ]
+    }
+    const backAnimatedStyle = {
+      transform: [
+        { rotateY: this.backInterpolate }
+      ]
+    }
 
     return (
       <View style={styles.container}>
         <Text style={styles.counter}>{this.state.card}/{cards.length}</Text>
-        <View style={styles.card}>
-          <Text style={styles.cardText}>{cards[card].question}</Text>
+        <View>
+          <Animated.View style={[styles.cardFront, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
+            <Text style={styles.cardText}>{cards[card].question}</Text>
+          </Animated.View>
+          <Animated.View style={[styles.cardFront, styles.cardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
+            <Text style={styles.cardText}>{cards[card].answer}</Text>
+          </Animated.View>
         </View>
         <TouchableOpacity
-          style={styles.flip}>
-          <Text style={styles.flipText}>Flip!</Text>
+          style={styles.flipButton}
+          onPress={this.flipCard}>
+          <Text style={styles.flipBtnText}>Show {flipText}!</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, {backgroundColor: green}]}>
@@ -47,25 +107,29 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: 'center'
   },
-  card: {
+  cardFront: {
     width: '75%',
-    height: '40%',
+    height: 200,
+    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    borderWidth: 1,
-    borderColor: darkGrey,
-    borderRadius: 5
+    borderRadius: 5,
+    backgroundColor: transparentGrey,
+  },
+  cardBack: {
+    position: "absolute",
+    top: 0,
   },
   cardText: {
-    fontSize: 25,
+    fontSize: 20,
     color: green
   },
-  flip: {
+  flipButton: {
     alignSelf: 'center',
     padding: 10
   },
-  flipText: {
+  flipBtnText: {
     color: green
   },
   button: {
