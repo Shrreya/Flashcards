@@ -53,15 +53,7 @@ class Quiz extends Component {
     }
   }
 
-  updateScore = (answer) => {
-
-    // Add to score for every correct answer
-    if (answer === 'correct') {
-      this.setState((currentState) => ({
-        score: currentState.score + 1
-      }));
-    }
-
+  proceed = () => {
     const { cards, title } = this.props;
     const total = cards.length;
     const { score, card } = this.state;
@@ -79,6 +71,22 @@ class Quiz extends Component {
     // Proceed to score report
     else {
       this.props.navigation.navigate('ScoreReport', { title, score, total });
+    }
+  }
+
+  updateScore = (answer) => {
+    // Add to score for every correct answer & proceed
+    if (answer === 'correct') {
+      this.setState(
+        (currentState) => ({
+          score: currentState.score + 1
+        }),
+        () => this.proceed()
+      );
+    }
+    // Proceed for every incorrect answer
+    else {
+      this.proceed();
     }
   }
 
