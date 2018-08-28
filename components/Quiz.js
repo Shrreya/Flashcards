@@ -53,6 +53,35 @@ class Quiz extends Component {
     }
   }
 
+  updateScore = (answer) => {
+
+    // Add to score for every correct answer
+    if (answer === 'correct') {
+      this.setState((currentState) => ({
+        score: currentState.score + 1
+      }));
+    }
+
+    const { cards, title } = this.props;
+    const total = cards.length;
+    const { score, card } = this.state;
+
+    // Proceed to next card
+    if (card + 1 < total) {
+      this.setState((currentState) => ({
+        card: currentState.card + 1
+      }));
+      // If card is flipped to answer, flip back to question state
+      if (this.value >= 90) {
+        this.flipCard();
+      }
+    }
+    // Proceed to score report
+    else {
+      this.props.navigation.navigate('ScoreReport', { title, score, total });
+    }
+  }
+
   render() {
     const { cards, title } = this.props;
     const { card, flipText } = this.state;
@@ -70,7 +99,7 @@ class Quiz extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.counter}>{this.state.card}/{cards.length}</Text>
+        <Text style={styles.counter}>{card + 1}/{cards.length}</Text>
         <View>
           <Animated.View style={[styles.cardFront, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
             <Text style={styles.cardText}>{cards[card].question}</Text>
@@ -85,11 +114,13 @@ class Quiz extends Component {
           <Text style={styles.flipBtnText}>Show {flipText}!</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, {backgroundColor: green}]}>
+          style={[styles.button, {backgroundColor: green}]}
+          onPress={() => this.updateScore('correct')}>
           <Text style={styles.buttonText}>Correct</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, {backgroundColor: red}]}>
+          style={[styles.button, {backgroundColor: red}]}
+          onPress={() => this.updateScore('incorrect')}>
           <Text style={styles.buttonText}>Incorrect</Text>
         </TouchableOpacity>
       </View>
