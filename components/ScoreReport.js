@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { green, white } from '../utils/colors';
+import { setLocalNotification, clearLocalNotification } from '../utils/api';
 
 class ScoreReport extends Component {
+
+  componentDidMount() {
+    // Reset local notification when quiz is completed
+    clearLocalNotification().then(setLocalNotification);
+  }
 
   render() {
     const { navigation } = this.props;
