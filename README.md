@@ -17,3 +17,8 @@ The project has been bootstrapped using [Create React Native App](https://github
 
 * Device - Moto G5S Plus, Android 7.1.1
 * Emulator - iPhone 8, iOS 11.4
+
+## Preview
+
+<img src="https://github.com/Shrreya/Flashcards/blob/master/screenshots/1.png" width="216" height="384" /> <img src="https://github.com/Shrreya/Flashcards/blob/master/screenshots/2.png" width="216" height="384" /> <img src="https://github.com/Shrreya/Flashcards/blob/master/screenshots/3.png" width="216" height="384" /> </br>
+<img src="https://github.com/Shrreya/Flashcards/blob/master/screenshots/4.png" width="216" height="384" /> <img src="https://github.com/Shrreya/Flashcards/blob/master/screenshots/5.png" width="216" height="384" /> <img src="https://github.com/Shrreya/Flashcards/blob/master/screenshots/6.png" width="216" height="384" />
